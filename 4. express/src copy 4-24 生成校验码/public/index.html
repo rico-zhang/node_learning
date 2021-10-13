@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>登录名：<input type="text" id="userid" value="rico"></p>
+    <p>密码：<input type="password" id="password" value="1"></p>
+    <p id="captchaArea" style="display: none;">
+        验证码： <input type="text" id="captcha">
+        <img src="/captcha" alt="">
+    </p>
+    <p>
+        <button id="submit">提交</button>
+    </p>
+
+    <script>
+        const oImg = document.querySelector('#captchaArea img');
+        const submitBtn = document.querySelector('#submit');
+        const captchaArea = document.querySelector('#captchaArea');
+        function refreshCaptcha() {
+            oImg.src = `/captcha?rad=${Math.random()}`;
+        }
+        oImg.onclick = refreshCaptcha;
+        submitBtn.onclick = async function () {
+            const body = {
+                loginId: document.querySelector('#userid').value,
+                loginPwd: document.querySelector('#password').value
+            }
+            if (captchaArea.style.display !== "none") {
+                body.captcha = document.querySelector('#captchaArea input').value;
+            }
+
+            let res = await fetch('/api/admin/login2', {
+                method: "post",
+                headers: {
+                    'content-type': "application/json"
+                },
+                body: JSON.stringify(body)
+            });
+            res = await res.json();
+            if(res.code ==401){
+                console.log('验证码错误');
+                captchaArea.style.display = 'block';
+                refreshCaptcha();
+            }else if(res.data){
+                console.log('登录成功');
+            }else{
+                console.log('登录失败');
+            }
+        }
+    </script>
+</body>
+
+</html>

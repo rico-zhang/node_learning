@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">
+    <style>
+        #div1 {
+            padding-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="div1">
+        <p>富文本框</p>
+    </div>
+
+    <script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/wangeditor@latest/dist/wangEditor.min.js"></script>
+    <script>
+        const E = window.wangEditor;
+        const editor = new E('#div1');
+        editor.config.height = 500;//高度
+        editor.highlight = hljs;//插入代码高亮
+        editor.config.menuTooltipPosition = 'down';//工具栏提示位置
+        // 内容改变之后
+        editor.config.onchange = function (newHtml) {
+            console.log('内容改变：', newHtml);
+        }
+        editor.config.onchangeTimeout = 500;
+        //选中内容之后
+        editor.config.onSelectionChange = function (newSelection) {
+            console.log('选中内容：', newSelection);
+        }
+        //失焦
+        editor.config.onblur = function (newHtml) {
+            console.log('onblur：', newHtml);
+        }
+        //聚焦
+        editor.config.onfocus = function (newHtml) {
+            console.log('onfocus', newHtml);
+        }
+        //插入网络图片
+        editor.config.linkImgCallback = function (src, alt, href) {
+            console.log('插入图片内容：', src, alt, href);
+        }
+        //插入网络视频
+        editor.config.onlineVideoCallback = function (video) {
+            console.log('插入视频内容：', video);
+        }
+
+        editor.config.linkCheck = function (text, link) {
+            return true;
+        }
+        editor.config.linkImgCheck = function (imgSrc, alt, href) {
+            return true;
+        }
+        editor.config.onlineVideoCheck = function (video) {
+            return true;
+        }
+
+        editor.config.uploadImgServer = 'http://localhost:9527/api/upload/1';
+        editor.config.uploadImgMaxSize = 2 * 1024 * 1024;//1M
+        editor.config.uploadImgAccept = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'];
+        editor.config.uplloadImgMaxLength = 5;
+        editor.config.uploadImgParams = {
+            defineparam1: 'param1',
+            defineparam2: 'param2'
+        }
+        // editor.config.uploadImgParamsWithUrl = true;
+        editor.config.uploadFileName = 'img';
+        // editor.config.uploadImgHeaders = {
+        //     defineheader1:'header1',
+        //     defineheader2:'header2'
+        // }
+        // editor.config.withCredentials =true;
+        // editor.config.uploadImgTimeout = 5*1000;
+
+
+
+        editor.create();
+        editor.txt.append('<p style = "color:red" >用 JS 设置的内容</p>');
+        console.log(editor.txt.html());
+        console.log(editor.txt.text());
+
+        console.log(editor.id,editor.config,editor.$textElem.elems[0],editor.textElemId,editor.$toolbarElem.elems[0],editor.toolbarElemId);
+    </script>
+
+
+</body>
+
+</html>

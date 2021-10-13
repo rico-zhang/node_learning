@@ -1,0 +1,82 @@
+const express = require('express');
+const cors = require('cors');
+const session = require('express-session');
+const path = require('path');
+
+
+const app = express();
+// app.use(require('connect-history-api-fallback')());
+
+app.use(require('./ImgProtectedMiddleware'))
+
+app.use(session({
+    name: "sessinid",
+    secret: "rico-zhang",
+}));
+
+const staticRootPath = path.resolve(__dirname, '../public');
+
+// app.use(express.static(staticRootPath, {
+//     maxAge: 1000 * 60 * 60,
+// }));
+app.use(express.static(staticRootPath, {
+    setHeaders: function (res, path, stat) {
+        if (!path.endsWith('.html')) {
+            res.header("Cache-Control", `max-age=${3600 * 24 * 365 * 100}`);//缓存很久
+        }
+    }
+}));
+
+// app.use(require('./CrosMiddleware'));
+app.use(cors((req, callbck) => {
+    callbck(null, {
+        origin: (origin, callback) => {
+            callback(null, {
+                origin,
+            });
+        },
+        credentials: true
+    })
+}
+));
+
+app.use(require('cookie-parser')());
+// app.use(require('cookie-parser')('sdfsd'));
+app.use(require('./TokenMiddleware'));
+
+app.use(express.urlencoded({ extended: true }));
+
+// app.use(require('./UrlEncodedMiddleware'));
+app.use(express.json());
+
+//使用代理
+app.use(require('./ProxyMiddleware'));
+
+// app.use(require('./LoggerMiddleware'));
+
+app.use(require('./CaptchaMiddleware'));
+
+app.get('/news', (req, res, next) => {
+    throw new Error('123');
+    // next(new Error('123'));
+});
+
+
+app.all('/api', (req, res) => {
+    console.log(req.body);
+    res.send('访问api');
+});
+
+app.set("views", path.resolve(__dirname, "./views"));
+app.use("/api/studentejs", require("./controlls/student"))
+
+app.use('/api/student', require('./api/student'));
+app.use('/api/admin', require('./api/admin'));
+app.use('/api/upload', require('./api/upload'));
+app.use('/res', require('./api/download'));
+
+app.use(require('./ErrorMiddleware'));
+
+app.listen(9527, () => {
+    console.log('listen on port 9527');
+});

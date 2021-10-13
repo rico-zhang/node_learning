@@ -1,0 +1,36 @@
+{
+  "name": "pktest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "connect-history-api-fallback": "^1.6.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "ejs": "3.1.2",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "jimp": "^0.16.1",
+    "jsonwebtoken": "^8.5.1",
+    "log4js": "^6.3.0",
+    "mockjs": "^1.1.0",
+    "multer": "^1.4.3",
+    "nodemon": "^2.0.12",
+    "path-to-regexp": "^6.2.0",
+    "qrcode": "^1.4.4",
+    "querystring": "^0.2.1",
+    "socket.io": "^4.2.0",
+    "svg-captcha": "^1.4.0",
+    "xss": "^1.0.9"
+  },
+  "devDependencies": {
+    "@types/node": "^16.9.2",
+    "http-proxy-middleware": "^2.0.1"
+  }
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="./css/index.css" />
+</head>
+
+<body>
+  <h1>静态页面</h1>
+  <script src="./js/index.js"></script>
+
+  <!-- jsonp -->
+  <!-- <script>
+
+    function (data) {
+      console.log(data);
+    }
+
+    function jsonp(api) {
+      const script = document.createElement('script');
+      console.log(script);
+      script.src = api;
+      script.onload =function(){
+        script.remove();
+      }
+      document.body.appendChild(script);
+    }
+    jsonp('/api/student/test/jsonp?=');
+  </script> -->
+
+
+  <!-- 简单请求  -->
+  <!-- <script>
+    fetch('http://localhost:9527/api/student/test/cros', {
+      method: 'get',
+    }).then(res => res.json())
+      .then(console.log)
+  </script> -->
+
+  <!-- 预检请求 -->
+  <!-- <script>
+    fetch('http://localhost:9527/api/student/test/cros', {
+      method: 'put',
+      headers:{
+        a:'a',
+        b:'b',
+        'Content-Type': 'application/x-www-form-urlencoded'//'application/json'
+      }
+    }).then(res => res.json())
+      .then(console.log)
+  </script> -->
+
+  <!-- 认证请求 -->
+  <script>
+    fetch('http://localhost:9527/api/student/test/cros', {
+      method: 'put',
+      credentials:'include'
+    }).then(res => res.json())
+      .then(console.log)
+  </script>
+</body>
+
+</html>

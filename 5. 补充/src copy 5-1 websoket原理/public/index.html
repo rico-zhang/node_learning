@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <button id="sendBtn" onclick="send()">发送</button>
+
+    <script>
+        const socket = new WebSocket('ws://localhost:9527');
+        socket.onopen = function (e) {
+            console.log('open', e);
+        }
+
+        socket.onmessage = function (e) {
+            console.log('message', e);
+        }
+        socket.onclose = function (e) {
+            console.log('close', e);
+        }
+        socket.onerror = function (e) {
+            console.log('error', e);
+        }
+
+        function send() {
+            socket.send('message from client');
+        }
+
+        // socket.close(); 
+    </script>
+</body>
+
+</html>

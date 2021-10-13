@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <a resrole="thunder" href="/res/1.png">下载</a>
+
+    <!-- 迅雷下载协议
+    把完整的下载地址得到
+    AA地址ZZ
+    base64编码
+    thunder://base64编码
+    -->
+    <script>
+        const a = document.querySelector("a[resrole=thunder]");
+        console.log(a.href);//http://localhost:9527/res/1.png
+        let thunderLink = `AA${a.href}ZZ`;
+        thunderLink = btoa(thunderLink);
+        thunderLink = "thunder://" + thunderLink;
+        a.href = thunderLink;
+    </script>
+</body>
+
+</html>
